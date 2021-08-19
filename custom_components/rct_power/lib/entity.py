@@ -114,10 +114,13 @@ class RctPowerEntity(MultiCoordinatorEntity, SensorEntity):
         if isinstance(value, tuple):
             return None
 
-        if self.unit_of_measurement == "%" and isinstance(value, Number):
-            return round(value * 100,1)
-
-        return round(value,1)
+        if isinstance(value, Number):
+            if self.unit_of_measurement == "%":
+                return value * 100
+            else:
+                return round(value,1)
+        
+        return value
 
     @property
     def state_class(self):
